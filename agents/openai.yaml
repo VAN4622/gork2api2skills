@@ -1,0 +1,7 @@
+interface:
+  display_name: "Grok Media API"
+  short_description: "Use deployed Grok2API through a Python CLI"
+  default_prompt: "Use $grok-media-api to call an existing Grok2API deployment through the bundled Python CLI for text-to-image, image-to-image, text-to-video, or image-to-video."
+
+policy:
+  allow_implicit_invocation: true
