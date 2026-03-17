@@ -13,6 +13,8 @@ Use this reference only when the caller needs raw request shaping, endpoint-leve
   - `multipart/form-data` for `/v1/images/edits`
   - `multipart/form-data` for `/v1/videos` image-to-video
 
+If a caller configures a base URL ending in `/v1`, normalize it back to the service root before appending endpoints. Otherwise requests can accidentally become `/v1/v1/images/generations`.
+
 The CLI also accepts these fallback environment variables:
 
 - `GROK2API_BASE_URL`

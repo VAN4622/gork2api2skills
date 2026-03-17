@@ -9,6 +9,8 @@ export GROK_MEDIA_BASE_URL="http://127.0.0.1:8000"
 export GROK_MEDIA_API_KEY="your-api-key"
 ```
 
+If the configured base URL already ends with `/v1`, the CLI strips the extra suffix automatically.
+
 ## Text to image
 
 ```bash

@@ -79,11 +79,18 @@ def resolve_config(args: argparse.Namespace) -> ResolvedConfig:
     model = args.model or default_model(args.mode)
     output_dir = Path(args.output_dir) if args.output_dir else default_output_dir()
     return ResolvedConfig(
-        base_url=base_url.rstrip("/"),
+        base_url=normalize_base_url(base_url),
         api_key=api_key,
         model=model,
         output_dir=output_dir,
     )
+
+
+def normalize_base_url(base_url: str) -> str:
+    value = base_url.rstrip("/")
+    if value.endswith("/v1"):
+        value = value[:-3]
+    return value
 
 
 def default_model(mode: str) -> str:

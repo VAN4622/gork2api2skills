@@ -11,6 +11,8 @@ Treat Grok2API as already deployed and reachable. Stay focused on invocation and
 
 Use the bundled Python CLI at `scripts/invoke_grok_media.py` as the default entrypoint. It standardizes auth, multipart upload, output directories, response capture, and media downloads for other models.
 
+Normalize base URLs before sending requests. If the caller passes a base URL ending in `/v1`, strip that suffix first so endpoint assembly does not accidentally produce `/v1/v1/...`.
+
 ## Quick Start
 
 Set these environment variables first:
