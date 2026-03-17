@@ -88,8 +88,8 @@ def resolve_config(args: argparse.Namespace) -> ResolvedConfig:
 
 def normalize_base_url(base_url: str) -> str:
     value = base_url.rstrip("/")
-    if value.endswith("/v1"):
-        value = value[:-3]
+    if not value.endswith("/v1"):
+        value = f"{value}/v1"
     return value
 
 
@@ -143,7 +143,7 @@ def build_request(
     args: argparse.Namespace, config: ResolvedConfig
 ) -> tuple[str, bytes, dict[str, str], dict[str, Any]]:
     if args.mode == "text-to-image":
-        endpoint = "/v1/images/generations"
+        endpoint = "/images/generations"
         payload = {
             "model": config.model,
             "prompt": args.prompt,
@@ -156,7 +156,7 @@ def build_request(
         return endpoint, body, headers, payload
 
     if args.mode == "text-to-video":
-        endpoint = "/v1/videos"
+        endpoint = "/videos"
         payload = {
             "model": config.model,
             "prompt": args.prompt,
@@ -169,7 +169,7 @@ def build_request(
         return endpoint, body, headers, payload
 
     if args.mode == "image-to-image":
-        endpoint = "/v1/images/edits"
+        endpoint = "/images/edits"
         fields = [
             ("model", config.model.encode("utf-8")),
             ("prompt", args.prompt.encode("utf-8")),
@@ -189,7 +189,7 @@ def build_request(
         }
         return endpoint, body, {"Content-Type": content_type}, preview
 
-    endpoint = "/v1/videos"
+    endpoint = "/videos"
     fields = [
         ("model", config.model.encode("utf-8")),
         ("prompt", args.prompt.encode("utf-8")),

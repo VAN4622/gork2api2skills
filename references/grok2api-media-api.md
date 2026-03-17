@@ -13,7 +13,7 @@ Use this reference only when the caller needs raw request shaping, endpoint-leve
   - `multipart/form-data` for `/v1/images/edits`
   - `multipart/form-data` for `/v1/videos` image-to-video
 
-If a caller configures a base URL ending in `/v1`, normalize it back to the service root before appending endpoints. Otherwise requests can accidentally become `/v1/v1/images/generations`.
+Use a `/v1` API base URL as the canonical form. The CLI normalizes the configured base URL so it ends with `/v1`, which prevents both missing-version and duplicated-version path issues.
 
 The CLI also accepts these fallback environment variables:
 
@@ -27,11 +27,11 @@ The CLI also accepts these fallback environment variables:
 
 | Capability | Preferred endpoint | Notes |
 | :-- | :-- | :-- |
-| text-to-image | `POST /v1/images/generations` | Simple image-only path |
-| image-to-image | `POST /v1/images/edits` | Upload one or more `image` parts |
-| text-to-video | `POST /v1/videos` | JSON body |
-| image-to-video | `POST /v1/videos` | Upload `input_reference`; only the first image is used |
-| unified multimodal call | `POST /v1/chat/completions` | Use only when the caller explicitly wants chat-completions semantics |
+| text-to-image | `POST /images/generations` on a `/v1` base | Simple image-only path |
+| image-to-image | `POST /images/edits` on a `/v1` base | Upload one or more `image` parts |
+| text-to-video | `POST /videos` on a `/v1` base | JSON body |
+| image-to-video | `POST /videos` on a `/v1` base | Upload `input_reference`; only the first image is used |
+| unified multimodal call | `POST /chat/completions` on a `/v1` base | Use only when the caller explicitly wants chat-completions semantics |
 
 ## Default models
 

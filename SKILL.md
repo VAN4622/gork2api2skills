@@ -11,13 +11,13 @@ Treat Grok2API as already deployed and reachable. Stay focused on invocation and
 
 Use the bundled Python CLI at `scripts/invoke_grok_media.py` as the default entrypoint. It standardizes auth, multipart upload, output directories, response capture, and media downloads for other models.
 
-Normalize base URLs before sending requests. If the caller passes a base URL ending in `/v1`, strip that suffix first so endpoint assembly does not accidentally produce `/v1/v1/...`.
+Normalize base URLs before sending requests. The CLI uses a `/v1`-scoped API base URL and ensures the configured base URL ends with `/v1`, so callers can pass either the service root or an already versioned API URL without producing malformed paths.
 
 ## Quick Start
 
 Set these environment variables first:
 
-- `GROK_MEDIA_BASE_URL`
+- `GROK_MEDIA_BASE_URL` and prefer a `/v1` API base such as `https://api.example.com/v1`
 - `GROK_MEDIA_API_KEY`
 - Optional: `GROK_MEDIA_IMAGE_MODEL`, `GROK_MEDIA_IMAGE_EDIT_MODEL`, `GROK_MEDIA_VIDEO_MODEL`
 
@@ -56,11 +56,11 @@ The CLI creates a timestamped output folder, stores the raw API response, downlo
 
 ## Endpoint Choice
 
-- Use `text-to-image` for `POST /v1/images/generations`
-- Use `image-to-image` for `POST /v1/images/edits`
-- Use `text-to-video` for `POST /v1/videos`
-- Use `image-to-video` for `POST /v1/videos` with `input_reference`
-- Use `/v1/chat/completions` only when the user explicitly wants the unified multimodal chat surface
+- Use `text-to-image` for `POST /images/generations` against the normalized `/v1` base
+- Use `image-to-image` for `POST /images/edits` against the normalized `/v1` base
+- Use `text-to-video` for `POST /videos` against the normalized `/v1` base
+- Use `image-to-video` for `POST /videos` with `input_reference` against the normalized `/v1` base
+- Use `/chat/completions` only when the user explicitly wants the unified multimodal chat surface on the same `/v1` base
 
 ## Workflow
 
